@@ -1,74 +1,33 @@
 class RecipesController < ApplicationController
-  before_action :set_recipe, only: [:show, :edit, :update, :destroy]
 
-  # GET /recipes
-  # GET /recipes.json
-  def index
-    @recipes = Recipe.all
-  end
-
-  # GET /recipes/1
-  # GET /recipes/1.json
   def show
+    @recipe = Recipe.find(params[:id])
   end
 
-  # GET /recipes/new
-  def new
-    @recipe = Recipe.new
-  end
-
-  # GET /recipes/1/edit
   def edit
+    @recipe = Recipe.find(params[:id])
   end
 
-  # POST /recipes
-  # POST /recipes.json
-  def create
-    @recipe = Recipe.new(recipe_params)
+# recipe = Recipe.new(name: "apple jam", instructions: "stir")
+# apple = Ingredient.new(name:"apple", description:"fruit")
+# count = Unit.new( name: "count", unit_type: "each", converter: 1)
+# recipe.ingredient_line_items.new(ingredient: apple, unit: count, amount_by_unit: 3)
+# recipe.save
 
-    respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Recipe was successfully created.' }
-        format.json { render :show, status: :created, location: @recipe }
-      else
-        format.html { render :new }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+# olive_oil = Ingredient.new(name:"olive_oil", description:"salad dressing")
+# spoon = Unit.new( name: "spoon", unit_type: "volumn", converter: 0.5)
+# recipe.ingredient_line_items.new(ingredient: olive_oil, unit: spoon, amount_by_unit: 2)
 
-  # PATCH/PUT /recipes/1
-  # PATCH/PUT /recipes/1.json
   def update
-    respond_to do |format|
-      if @recipe.update(recipe_params)
-        format.html { redirect_to @recipe, notice: 'Recipe was successfully updated.' }
-        format.json { render :show, status: :ok, location: @recipe }
-      else
-        format.html { render :edit }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
-      end
+    @recipe = Recipe.find(params[:id])
+    if @recipe.update(recipe_params)
+      redirect_to recipe_url(@recipe)
+    else
+      render 'edit'
     end
   end
 
-  # DELETE /recipes/1
-  # DELETE /recipes/1.json
-  def destroy
-    @recipe.destroy
-    respond_to do |format|
-      format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  def recipe_params
+    params.require(:recipe).permit(:name, :instructions)
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_recipe
-      @recipe = Recipe.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def recipe_params
-      params.require(:recipe).permit(:name, :instructions)
-    end
 end

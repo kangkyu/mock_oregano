@@ -5,6 +5,17 @@
 %p
   %strong Instructions:
   = @recipe.instructions
+%p
+  %strong Ingredient List:
+  - @recipe.ingredient_line_items.each do |line_item| 
+    %br
+    = line_item.ingredient.name
+    = pluralize(line_item.amount_by_unit, line_item.unit.name)
+    / = line_item.unit.name
+
+
+
+
 = link_to 'Edit', edit_recipe_path(@recipe)
 |
 = link_to 'Back', recipes_path

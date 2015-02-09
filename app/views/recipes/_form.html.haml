@@ -1,4 +1,4 @@
-= form_for(@recipe) do |f|
+= form_for(@recipe) do |recipe_form|
   - if @recipe.errors.any?
     #error_explanation
       %h2
@@ -8,12 +8,20 @@
         - @recipe.errors.full_messages.each do |message|
           %li= message
   .field
-    = f.label :name
+    = recipe_form.label :name
     %br/
-    = f.text_field :name
+    = recipe_form.text_field :name
   .field
-    = f.label :instructions
+    = recipe_form.label :instructions
     %br/
-    = f.text_area :instructions
+    = recipe_form.text_area :instructions
+    %br/
+
+    = recipe_form.fields_for :ingredient_line_items do |ingredient_line_items_form|
+      = ingredient_line_items_form.number_field :ingredient_id
+      = ingredient_line_items_form.number_field :unit_id
+      = ingredient_line_items_form.number_field :amount_by_unit, step: '0.01'
+      %br/
+
   .actions
-    = f.submit
+    = recipe_form.submit

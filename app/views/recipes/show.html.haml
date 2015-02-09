@@ -9,12 +9,11 @@
   %strong Ingredient List:
   - @recipe.ingredient_line_items.each do |line_item| 
     %br
+    = "(ingredient_id: #{line_item.ingredient_id})"
     = line_item.ingredient.name
-    = pluralize(line_item.amount_by_unit, line_item.unit.name)
-    / = line_item.unit.name
-
-
-
+    = "(unit_id: #{line_item.unit_id})"
+    = line_item.unit.name
+    = number_with_precision(line_item.amount_by_unit, strip_insignificant_zeros: true)
 
 = link_to 'Edit', edit_recipe_path(@recipe)
 |

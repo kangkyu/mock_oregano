@@ -8,6 +8,10 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
   end
 
+  def new
+    @recipe = Recipe.new
+  end
+
 # recipe = Recipe.new(name: "apple jam", instructions: "stir")
 # apple = Ingredient.new(name:"apple", description:"fruit")
 # count = Unit.new( name: "count", unit_type: "each", converter: 1)

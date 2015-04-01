@@ -6,14 +6,18 @@ class RecipesController < ApplicationController
 
   def edit
     @recipe = Recipe.find(params[:id])
+    @recipe.ingredient_line_items.build
   end
 
   def index
     @recipes = Recipe.all
   end
+
   def new
     @recipe = Recipe.new
+    @recipe.ingredient_line_items.build
   end
+
 
 # recipe = Recipe.new(name: "apple jam", instructions: "stir")
 # apple = Ingredient.new(name:"apple", description:"fruit")
@@ -31,6 +35,15 @@ class RecipesController < ApplicationController
       redirect_to recipe_url(@recipe)
     else
       render 'edit'
+    end
+  end
+
+  def create
+    @recipe = Recipe.new(recipe_params)
+    if @recipe.save
+      redirect_to recipe_url(@recipe)
+    else
+      render 'new'
     end
   end
 

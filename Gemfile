@@ -20,6 +20,7 @@ group :development, :test do
 end
 
 gem 'haml-rails', '~> 0.8.2'
+gem 'nested_form_fields'
 
 group :production do
   gem 'pg', '0.18.1'

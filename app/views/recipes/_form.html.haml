@@ -12,11 +12,16 @@
     = recipe_form.text_area :instructions
     %br/
 
-    = recipe_form.fields_for :ingredient_line_items do |ingredient_line_items_form|
+    = recipe_form.nested_fields_for :ingredient_line_items do |ingredient_line_items_form|
+      = ingredient_line_items_form.remove_nested_fields_link
+      = ingredient_line_items_form.label :ingredient_id
       = ingredient_line_items_form.number_field :ingredient_id
+      = ingredient_line_items_form.label :unit_id
       = ingredient_line_items_form.number_field :unit_id
+      = ingredient_line_items_form.label :amount_by_unit
       = ingredient_line_items_form.number_field :amount_by_unit, step: '0.01'
       %br/
+    = recipe_form.add_nested_fields_link :ingredient_line_items
 
   .actions
     = recipe_form.submit
